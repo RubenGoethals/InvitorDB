@@ -1,0 +1,45 @@
+﻿@model InvitorDB.Webapp.ViewModels.EditRole_VM
+
+@{
+    ViewData["Title"] = "EditRole";
+}
+
+<h3>Edit Role</h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditRole">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="RoleName" class="control-label"></label>
+                <input asp-for="RoleName" class="form-control" />
+                <span asp-validation-for="RoleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<p><u>Has following users</u></p>
+@if (@Model.Users.Count() > 0)
+{
+    <ul>
+        @foreach (var item in @Model.Users)
+        {
+            <li>@item.UserName</li>
+        }
+    </ul>
+}
+
+<div>
+    <a asp-action="IndexRoles">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

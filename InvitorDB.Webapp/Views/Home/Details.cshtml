@@ -1,0 +1,60 @@
+﻿@model InvitorDB.Models.Event
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h3>Details Event</h3>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateOfEvent)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateOfEvent)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EndOfRegistration)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EndOfRegistration)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MaxPersons)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MaxPersons)
+        </dd>
+    </dl>
+</div>
+<div>
+    <form asp-action="Create">
+        <div class="form-group">
+            <input type="submit" value="Apply" class="btn btn-primary" /> |
+
+            @*<a asp-action="create" asp-controller="home" asp-route-id="@Model.Id" class="btn btn-primary">Details</a>*@
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </form>
+@*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ })*@
+</div>

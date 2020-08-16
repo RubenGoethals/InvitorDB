@@ -1,0 +1,41 @@
+﻿@model InvitorDB.Webapp.ViewModels.RolesForUser_VM
+
+@{
+    ViewData["Title"] = "RemoveRoleFromUser";
+}
+
+@if (@Model.AssignedRoles.Count() > 0)
+{
+    <p><u>@Html.DisplayNameFor(model => model.User) @Html.DisplayFor(model => model.User.UserName) has following roles</u></p>
+    <ul>
+        @foreach (var item in @Model.AssignedRoles)
+        {
+            <li>@item</li>
+        }
+    </ul>
+}
+else
+{
+    <p><u>@Html.DisplayNameFor(model => model.User) @Html.DisplayFor(model => model.User.UserName) has no roles</u></p>
+}
+
+<p><u>Select to remove roles</u></p>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="RemoveRoleFromUser">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <select asp-for="RoleId" asp-items="@(new SelectList(Model.AssignedRoles))">
+                    <option selected disabled hidden> --- Remove selected role ---</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Remove selected role from user @Html.DisplayFor(model => model.User.UserName)" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="IndexUsers">Back to Users</a>
+</div>
