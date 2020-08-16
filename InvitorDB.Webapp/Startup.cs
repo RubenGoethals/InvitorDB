@@ -76,7 +76,7 @@ namespace InvitorDB.Webapp
 
             //Seeder voor Identity & Data
             InvitorDBContextExtensions.SeedRoles(roleMgr).Wait();
-            //InvitorDBContextExtensions.SeedUsers(userMgr).Wait();
+            InvitorDBContextExtensions.SeedUsers(userMgr).Wait();
             //context.SeedData().Wait(); //oproepen als extensiemetehode.
 
         }

@@ -33,12 +33,12 @@ namespace InvitorDB.Models.Repositories
             }
         }
 
-        public int GetAmountPersons(int eventId)
+        public async Task<int> GetAmountPersons(int eventId)
         {
             try
             {
-                var result = GetEventForIdAsync(eventId);
-                return result.Result.PersonsEvents.Count();
+                var result = await GetEventForIdAsync(eventId);
+                return result.PersonsEvents.Count();
             }
             catch (Exception exc)
             {

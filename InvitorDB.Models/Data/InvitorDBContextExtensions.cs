@@ -53,7 +53,7 @@ namespace InvitorDB.Models.Data
             //var nmbrStudents = 9;
             //for (var i = 1; i <= nmbrStudents; i++)
             //{
-            if (userMgr.FindByEmailAsync("Student@MCT").Result == null)
+            if (await userMgr.FindByNameAsync("Student@MCT") == null)
             {
                 Person student = new Person
                 {

@@ -64,29 +64,41 @@ namespace InvitorDB.Webapp.Controllers
         }
 
         // GET: PersonsEvent/Create
-        public ActionResult Create()
+        public async Task<IActionResult> Create(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                //return BadRequest();  //model nog null
+                return Redirect("/Error/400");
+            }
+            var education = await eventRepo.GetEventForIdAsync(id.Value);
+            if (education == null)
+            {
+                //return BadRequest();  //ADO
+                ModelState.AddModelError("", "Not Found.");
+            }
+            return View(education);
         }
 
         // POST: PersonsEvent/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int id, IFormCollection collection)
+        public async Task<IActionResult> Create(int? id, IFormCollection collection)
         {
             PersonsEvents created = null;
-            var ev = await eventRepo.GetEventForIdAsync(id);
+            var ev = await eventRepo.GetEventForIdAsync(id.Value);
             try
             {
                 // TODO: Add insert logic here
                 if (ModelState.IsValid)
                 {
                     var user = await userManager.GetUserAsync(HttpContext.User);
-                    if (eventRepo.GetAmountPersons(ev.Id) <= ev.MaxPersons)
+                    var amount = await eventRepo.GetAmountPersons(ev.Id);
+                    if (amount <= ev.MaxPersons)
                     {
                         created = await eventRepo.AddEventToPerson(user.Id, ev.Id, false);
                     }
-                    else if (eventRepo.GetAmountPersons(ev.Id) <= ev.MaxPersons + 3)
+                    else if (amount <= ev.MaxPersons + 3)
                     {
                         created = await eventRepo.AddEventToPerson(user.Id, ev.Id, true);
                     }
@@ -95,13 +107,13 @@ namespace InvitorDB.Webapp.Controllers
                         throw new Exception(" Invalid dataentry.");
                     return RedirectToAction(nameof(Index));
                 }
-                return View(ev);
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception exc)
             {
                 Console.WriteLine("Create is unable to save.");
                 ModelState.AddModelError("", "Create Actie mislukt." + exc.Message);
-                return View(ev);
+                return RedirectToAction(nameof(Index));
             }
         }
 

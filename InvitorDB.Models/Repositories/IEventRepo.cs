@@ -7,7 +7,7 @@ namespace InvitorDB.Models.Repositories
     {
         Task<Event> Add(Event ev);
         Task<IEnumerable<Event>> GetAllEventsAsync();
-        int GetAmountPersons(int eventId);
+        Task<int> GetAmountPersons(int eventId);
         Task<IEnumerable<Event>> GetAllEventsAsync(string search = null, string sortField = "Name");
         Task<PersonsEvents> AddEventToPerson(string personId, int eventId, bool reserve);
         Task<Event> GetEventForIdAsync(int id);
