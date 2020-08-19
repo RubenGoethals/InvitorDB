@@ -49,6 +49,7 @@ namespace InvitorDB.API
             services.AddIdentity<Person, Role>().AddEntityFrameworkStores<InvitorDBContext>();
 
             services.AddScoped<IPersonRepo, PersonRepo>();
+            services.AddScoped<IEventRepo, EventRepo>();
 
             //4. open API documentatie
             services.AddSwaggerGen(c =>

@@ -48,6 +48,36 @@ namespace InvitorDB.Webapp.Controllers
 
         }
 
+        public async Task<IActionResult> IndexUsers(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var ev = await eventRepo.GetPersonInEvent(id.Value);
+            if (ev == null)
+            {
+                return NotFound();
+            }
+            return View(ev);
+        }
+
+
+        public async Task<IActionResult> IndexEvaluations(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var ev = await eventRepo.GetEvaluationsForIdAsync(id.Value);
+            if (ev == null)
+            {
+                return NotFound();
+            }
+            return View(ev);
+        }
+
+
         // GET: Event/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -63,27 +93,27 @@ namespace InvitorDB.Webapp.Controllers
             return View(ev);
         }
 
-        // GET: PersonsEvent/Create
-        public async Task<IActionResult> Create(int? id)
+        // GET: HomeController/AddPersonToEvent
+        public async Task<IActionResult> AddPersonToEvent(int? id)
         {
             if (id == null)
             {
                 //return BadRequest();  //model nog null
                 return Redirect("/Error/400");
             }
-            var education = await eventRepo.GetEventForIdAsync(id.Value);
-            if (education == null)
+            var ev = await eventRepo.GetEventForIdAsync(id.Value);
+            if (ev == null)
             {
                 //return BadRequest();  //ADO
                 ModelState.AddModelError("", "Not Found.");
             }
-            return View(education);
+            return View(ev);
         }
 
-        // POST: PersonsEvent/Create
+        // POST: HomeController/AddPersonToEvent
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int? id, IFormCollection collection)
+        public async Task<IActionResult> AddPersonToEvent(int? id, IFormCollection collection)
         {
             PersonsEvents created = null;
             var ev = await eventRepo.GetEventForIdAsync(id.Value);
@@ -102,6 +132,48 @@ namespace InvitorDB.Webapp.Controllers
                     {
                         created = await eventRepo.AddEventToPerson(user.Id, ev.Id, true);
                     }
+                    
+                    if (created is null)
+                        throw new Exception(" Invalid dataentry.");
+
+                    user.Bonus += 5;
+                    var result = await userManager.UpdateAsync(user);
+                    if (result == null)
+                    {
+                        return Redirect("/Error/400");
+                    }
+
+                    return RedirectToAction(nameof(Index));
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("Create is unable to save.");
+                ModelState.AddModelError("", "Create Actie mislukt." + exc.Message);
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        // GET: HomeController/AddEvalutionToEvent
+        public ActionResult AddEvaluationToEvent(int? id) => View();
+
+        // POST: HomeController/AddEvalutionToEvent
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddEvaluationToEvent(int? id, IFormCollection collection, EvaluationForms evaluationForms)
+        {
+            EvaluationForms created = null;
+            var ev = await eventRepo.GetEventForIdAsync(id.Value);
+            try
+            {
+                // TODO: Add insert logic here
+                if (ModelState.IsValid)
+                {
+                    var user = await userManager.GetUserAsync(HttpContext.User);
+                    evaluationForms.EventId = ev.Id;
+                    evaluationForms.PersonId = user.Id;
+                    created = await eventRepo.AddEvalutionToEvent(evaluationForms);
                     
                     if (created is null)
                         throw new Exception(" Invalid dataentry.");

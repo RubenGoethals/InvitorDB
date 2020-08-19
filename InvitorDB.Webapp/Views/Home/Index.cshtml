@@ -10,11 +10,11 @@
     <partial name="Form_EventsForEvent.cshtml" />
 </p>
 
-<section class="card-deck">
+<div class="row row-cols-3 row-cols-md-2">
     @foreach (var item in Model)
     {
         <partial name="_DetailsEventPartial" model="item" />
     }
-</section>
+</div>
 
 

@@ -72,6 +72,22 @@ namespace InvitorDB.Models.Repositories
             }
         }
 
+        public async Task<EvaluationForms> AddEvalutionToEvent(EvaluationForms evaluationForms)
+        {
+            try
+            {
+                var result = await context.EvaluationForms.AddAsync(evaluationForms);
+                await context.SaveChangesAsync();
+                return evaluationForms;
+            }
+            catch (Exception exc)
+            {
+                // cannot insert expliciet value for Id (0) when Identity Insert is OFF 
+                Console.WriteLine(exc.InnerException.Message);
+                return null;
+            }
+        }
+
         public async Task Delete(int EventId)
         {
             try
@@ -147,6 +163,16 @@ namespace InvitorDB.Models.Repositories
         public async Task<Event> GetRandomEvent()
         {
             return await context.Events.OrderBy(e => Guid.NewGuid()).FirstAsync();
+        }
+
+        public async Task<IEnumerable<EvaluationForms>> GetEvaluationsForIdAsync(int value)
+        {
+            return await context.EvaluationForms.Where(e => e.EventId == (value)).ToListAsync();
+        }
+
+        public async Task<IEnumerable<PersonsEvents>> GetPersonInEvent(int value)
+        {
+            return await context.PersonsEvents.Where(e => e.EventId == (value)).ToListAsync();
         }
     }
 }

@@ -27,6 +27,9 @@ namespace InvitorDB.Models
         [Range(0, 1, ErrorMessage = "ongeldige keuze")]
         public GenderType Gender { get; set; }
 
+        [ScaffoldColumn(false)]
+        public int Bonus { get; set; }
+
         [NotMapped]
         [ScaffoldColumn(false)]
         public string ImgUrl

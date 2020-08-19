@@ -10,6 +10,7 @@ namespace InvitorDB.Models.Repositories
         Task<int> GetAmountPersons(int eventId);
         Task<IEnumerable<Event>> GetAllEventsAsync(string search = null, string sortField = "Name");
         Task<PersonsEvents> AddEventToPerson(string personId, int eventId, bool reserve);
+        Task<EvaluationForms> AddEvalutionToEvent(EvaluationForms evaluationForms);
         Task<Event> GetEventForIdAsync(int id);
 
         //UPDATE (Async)
@@ -17,5 +18,7 @@ namespace InvitorDB.Models.Repositories
 
         //DELETE (Async)
         Task Delete(int eventId);
+        Task<IEnumerable<EvaluationForms>> GetEvaluationsForIdAsync(int value);
+        Task<IEnumerable<PersonsEvents>> GetPersonInEvent(int value);
     }
 }

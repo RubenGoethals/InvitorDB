@@ -1,0 +1,62 @@
+﻿@model IEnumerable<InvitorDB.Models.EvaluationForms>
+
+@{
+    ViewData["Title"] = "IndexEvaluations";
+}
+
+<h1>Index Evaluations Forms</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfEntry)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Review)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PersonId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfEntry)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Review)
+                </td>
+                @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>*@
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a asp-action="AddEvaluationToEvent" asp-route-id="@ViewContext.RouteData.Values["id"]">Add Evaluation</a>
+</p>
+

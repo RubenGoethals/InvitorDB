@@ -4,14 +4,16 @@ using InvitorDB.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InvitorDB.Models.Migrations
 {
     [DbContext(typeof(InvitorDBContext))]
-    partial class InvitorDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200818175115_ChangeTable")]
+    partial class ChangeTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,9 +30,7 @@ namespace InvitorDB.Models.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1024)")
-                        .HasMaxLength(1024);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateOfEntry")
                         .HasColumnType("datetime2");
@@ -88,9 +88,6 @@ namespace InvitorDB.Models.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Bonus")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")

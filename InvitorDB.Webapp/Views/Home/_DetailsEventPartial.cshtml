@@ -4,26 +4,39 @@
     function myFunction() {
         alert("You need to registrate!");
     }
+
+    function myEvent() {
+        alert("The event has not happened yet!");
+    }
 </script>
 
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-        <h5 class="card-title">
-            @Model.Name
-        </h5>
-        <h6 class="card-subtitle mb-2 text-muted">Maximum aantal personen @Model.MaxPersons</h6>
-        <p class="card-text">@Model.Description</p>
-        @if (ViewBag.IsLoggedIn)
-        {
-            <a asp-action="details" asp-controller="home" asp-route-id="@Model.Id" class="btn btn-primary">Details</a>
-        }
-        else
-        {
-            <a onclick="myFunction()" class="btn btn-primary" disabled>Details</a>
-        }
-
-    </div>
-    <div class="card-footer">
-        <small class="text-muted">End of registrations @Model.EndOfRegistration</small>
+<div class="col-3 mb-4">
+    <div class="card h-100">
+        <div class="card-body justify-content-around flex-column">
+            <h5 class="card-title">
+                @Model.Name
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">Maximum aantal personen @Model.MaxPersons</h6>
+            <p class="card-text">@Model.Description</p>
+            @if (ViewBag.IsLoggedIn)
+            {
+                <a asp-action="AddPersonToEvent" asp-controller="home" asp-route-id="@Model.Id" class="btn btn-primary">Details</a>
+                @if (Model.DateOfEvent < DateTime.Now)
+                {
+                    <a asp-action="IndexEvaluations" asp-controller="home" asp-route-id="@Model.Id" class="btn btn-primary">Review</a>
+                }
+                else
+                {
+                    <a onclick="myEvent()" class="btn btn-primary" disabled>Review</a>
+                }
+            }
+            else
+            {
+                <a onclick="myFunction()" class="btn btn-primary" disabled>Details</a>
+            }
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">End of registrations @Model.EndOfRegistration</small>
+        </div>
     </div>
 </div>

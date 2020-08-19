@@ -48,7 +48,7 @@
     </dl>
 </div>
 <div>
-    <form asp-action="Create">
+    <form asp-action="AddPersonToEvent">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Id" class="control-label" style="display: none;"></label>
@@ -56,8 +56,9 @@
             <span asp-validation-for="Id" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <input type="submit" value="Apply" class="btn btn-primary" /> |
+            <input type="submit" value="Apply" class="btn btn-primary" />
             @*<a asp-action="create" asp-controller="home" asp-route-id="@Model.Id" class="btn btn-primary">Details</a>*@
+            <a asp-action="IndexUsers" asp-controller="home" asp-route-id="@Model.Id" class="btn btn-primary">Show Users</a> | 
             <a asp-action="Index">Back to List</a>
         </div>
     </form>

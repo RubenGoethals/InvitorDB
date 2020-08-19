@@ -1,0 +1,55 @@
+﻿@model IEnumerable<InvitorDB.Models.PersonsEvents>
+
+@{
+    ViewData["Title"] = "IndexUsers";
+}
+
+<h1>IndexUsers</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfEntry)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reserve)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PersonId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfEntry)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Reserve)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a asp-action="Index">Back to Home</a>
+</p>
